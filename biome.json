@@ -1,0 +1,101 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": [
+			"**/src/**/*",
+			"**/.vscode/**/*",
+			"**/index.html",
+			"**/vite.config.js",
+			"!**/src/routeTree.gen.ts",
+			"!**/src/styles.css"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"preset": "recommended",
+			"performance": {
+				"noBarrelFile": "error",
+				"noReExportAll": "error"
+			},
+			"style": {
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"paths": {
+							"cloudflare:workers": "Server-only module. Import it only from features/*/server/, features/*/functions.ts, src/db/ or routes/api/. Client code should call a server function (createServerFn) in features/*/functions.ts instead.",
+							"@/db": "Server-only module. Import it only from features/*/server/, features/*/functions.ts, src/db/ or routes/api/. Client code should call a server function (createServerFn) in features/*/functions.ts instead."
+						},
+						"patterns": [
+							{
+								"group": [
+									"@/features/*/server/**",
+									"../server/**",
+									"./server/**"
+								],
+								"message": "Server-only module. Import it only from features/*/server/, features/*/functions.ts, src/db/ or routes/api/. Client code should call a server function (createServerFn) in features/*/functions.ts instead."
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["**/src/components/ui/**"],
+			"linter": {
+				"enabled": false
+			}
+		},
+		{
+			"includes": [
+				"**/src/features/*/server/**",
+				"**/src/features/*/functions.ts",
+				"**/src/db/**",
+				"**/src/routes/api/**",
+				"**/src/server.ts"
+			],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/src/db/schema.ts", "**/src/lib/utils.ts"],
+			"linter": {
+				"rules": {
+					"performance": {
+						"noBarrelFile": "off",
+						"noReExportAll": "off"
+					}
+				}
+			}
+		}
+	]
+}
